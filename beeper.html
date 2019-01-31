@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Beeper</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div id="app" class="wrapper">
+
+<div class="blink" :class="{active : (type == 'blink' && activeBlinker)}" :style="{background: colorList[colorName]}"></div>
+
+<div class="panel-info">
+    <div class="container">
+        <div class="info">
+            <span class="current" :class="{animated: isActive}"> {{ interval }}s </span>
+        </div>
+        <button class="btn-stop" @click="stop" :disabled="!isActive">Stop</button>
+    </div>
+</div>
+
+<div class="container">
+
+<div class="panel-settings">
+    <div class="set-row basic-settigns">
+        <div class="switcher">
+            <input type="radio" id="beep" value="beep" v-model="type">
+            <label for="beep"><span>beep</span></label>
+
+            <input type="radio" id="blink" value="blink" v-model="type">
+            <label for="blink"><span>blink</span></label>
+
+            <div class="switch-roller"></div>
+        </div>
+
+        <div class="subsettings">
+            <div v-show="type == 'beep'">
+                <template v-for="sound, name in soundList">
+                    <input type="radio" :id="name" :value="name" v-model="soundName">
+                    <label :for="name"><span>{{ name }}</span></label>
+                </template>
+                <div class="subsettings-roller"></div>
+            </div>
+
+            <div v-show="type == 'blink'">
+                <template v-for="color, name in colorList">
+                    <input type="radio" :id="name" :value="name" v-model="colorName">
+                    <label :for="name"><span>{{ name }}</span></label>
+                </template>
+                <div class="subsettings-roller"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="set-row">
+		<button class="btn-start" @click="start(30)">Start - 0.5 min</button>
+		<button class="btn-start" @click="start(60)">Start - 1 min</button>
+		<button class="btn-start" @click="start(90)">Start - 1.5 min</button>
+	</div>
+
+    <div class="set-row custom">
+        <p>Enter the interval (seconds):</p>
+        <input type="number" v-model="interval">
+        <button class="btn-start" @click="start(interval)">Start - {{interval}} s</button>
+    </div>
+</div>
+
+<div class="panel-extended">
+
+</div>
+
+
+</div>
+
+</div>
+
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
